@@ -1,4 +1,7 @@
 import type { GatsbyConfig } from "gatsby";
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -28,7 +31,19 @@ const config: GatsbyConfig = {
       "path": "./src/pages/"
     },
     __key: "pages"
-  }]
+  },{
+    resolve: 'gatsby-source-newt',
+    options: {
+      spaceUid: process.env.SPACE_ID,
+      token: process.env.TOKEN,
+      appUid: process.env.APP_UID,
+      models: [{
+        uid: 'article',
+      },{uid:'author'},{
+        uid:'tag'
+      }],
+    },
+  },]
 };
 
 export default config;
